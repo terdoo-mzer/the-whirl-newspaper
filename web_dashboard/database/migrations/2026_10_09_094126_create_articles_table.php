@@ -12,18 +12,18 @@ return new class extends Migration
     public function up(): void
     {
      Schema::create('articles', function (Blueprint $table) {
-    $table->bigIncrements('id');
-    $table->unsignedBigInteger('author_id');
+    $table->uuid('id')->primary();
+    $table->uuid('author_id');
     $table->unsignedBigInteger('category_id');
-    $table->unsignedBigInteger('reviewed_by')->nullable();
-    $table->unsignedBigInteger('published_by')->nullable();
+    $table->uuid('reviewed_by')->nullable();
+    $table->uuid('published_by')->nullable();
     $table->string('title');
     $table->string('slug')->unique();
     $table->text('excerpt');
     $table->longText('body');
     $table->string('featured_image');
     $table->enum('content_type', ['free', 'premium']);
-    $table->enum('status', ['draft', 'review', 'published', 'rejected', 'archived'])->default('draft');
+    $table->enum('status', ['draft', 'in_review', 'published', 'rejected', 'archived'])->default('draft');
     $table->dateTime('reviewed_at')->nullable();
     $table->text('rejection_reason')->nullable();
     $table->dateTime('published_at')->nullable();
